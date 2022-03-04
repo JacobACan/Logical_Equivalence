@@ -70,6 +70,23 @@ public class Operator_Reader {
         }
         this.inputString = removedSpacesString;
     }
+    private String removeOutsideParenthesis(String string) {
+        String removedParenthesisString = string;
+        char[] StringArray = string.toCharArray();
+        if (StringArray[StringArray.length - 1] == ')' &&  StringArray[0] == '(' ) {
+
+            StringArray[StringArray.length - 1] = ' ';
+            StringArray[0] = ' ';
+
+            removedParenthesisString = "";
+            for (char ch: StringArray) {
+                if (ch != ' ') {
+                    removedParenthesisString += Character.toString(ch);
+                }
+            }
+        }
+        return removedParenthesisString;
+    }
     public void compileString() {
         this.compiledString = parseString(this.inputString);
     }
@@ -94,7 +111,9 @@ public class Operator_Reader {
         
 
         for (String operator : orderOfOperations) {
+            inputString = removeOutsideParenthesis(inputString);
             int i = inputString.length() - 1;
+
             char[] inputcharArray = inputString.toCharArray();
 
             if (!operatorFound) {                                       // find first occurance of lowest operator
