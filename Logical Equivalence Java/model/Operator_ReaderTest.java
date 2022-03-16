@@ -8,8 +8,8 @@ public class Operator_ReaderTest {
    @Test
    public void parseTest() {
       Operator_Reader string1 = new Operator_Reader("(p → q v (q → p) ^ s v r)");
-      System.out.println(string1);
+      Operator_Reader string2 = new Operator_Reader("(q → p) ^ p");
+      Operator_Reader string3 = new Operator_Reader("(r ^ (q → p) ^ p");
+      System.out.println(string2);
    }
-    
-
 }

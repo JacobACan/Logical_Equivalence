@@ -72,7 +72,7 @@ public class Operator_Reader {
     }
     private String removeOutsideParenthesis(String string) {
         String removedParenthesisString = string;
-        char[] StringArray = string.toCharArray();
+         char[] StringArray = string.toCharArray();
         if (StringArray[StringArray.length - 1] == ')' &&  StringArray[0] == '(' ) {
 
             StringArray[StringArray.length - 1] = ' ';
@@ -118,9 +118,9 @@ public class Operator_Reader {
 
             if (!operatorFound) {                                       // find first occurance of lowest operator
                 while(i >= 0 && !operatorFound) {
-                    if(inputcharArray[i] == '(') {                       //skip parenthesis
+                    if(inputcharArray[i] == ')') {                       //skip parenthesis
                         insideParenthesis = true;
-                    } else if (inputcharArray[i] == ')') {
+                    } else if (inputcharArray[i] == '(') {
                         insideParenthesis = false;
                     }
                     if(!insideParenthesis) {
