@@ -12,6 +12,8 @@ public class Operator_Reader {
     private List<String> orderOfOperations;
     private  Set<String> propositions = new HashSet<>();
 
+    //can revise with 
+
     public Operator_Reader(String inputString) {
         this.inputString = inputString;
         removeSpaces();
@@ -22,7 +24,7 @@ public class Operator_Reader {
         this.orderOfOperations = new ArrayList<>();
         setOrderOfOperations();
         
-        this.validInput = checkParenthesis();
+        this.validInput = checkParenthesis(inputString);
 
         this.compiledString = "";
         parseInput();
@@ -37,6 +39,7 @@ public class Operator_Reader {
         propositions.add("s");
     }
     private void setOrderOfOperations() {
+        orderOfOperations.add("≡");
         orderOfOperations.add("↔");
         orderOfOperations.add("→");
         orderOfOperations.add("v");
@@ -44,15 +47,16 @@ public class Operator_Reader {
         orderOfOperations.add("¬");
     }
 
-    private boolean checkParenthesis() {
+    private boolean checkParenthesis(String inputString) {
         int leftParenthesis = 0;
         int rightParenthesis = 0;
-        char[] inputStringArray = this.inputString.toCharArray();
+        char[] inputStringArray = inputString.toCharArray();
         for (char ch: inputStringArray) {
             if (ch == '(') {
                 leftParenthesis++;
             }
             if (ch == ')') {
+                if (leftParenthesis < 1) return false;
                 rightParenthesis++;
             }
         }
@@ -87,6 +91,7 @@ public class Operator_Reader {
         }
         return removedParenthesisString;
     }
+    
     public void compileString() {
         this.compiledString = parseString(this.inputString);
     }
@@ -103,15 +108,19 @@ public class Operator_Reader {
     private String parseString(String inputString) {
         boolean insideParenthesis = false;
         boolean operatorFound = false;
+        boolean notOperatorFound = false;
         String leftString  = "";
         String rightString  = "";
-        String compiledLeftString = "";
-        String compiledRightString = "";
+        String parsedLeftString = "";
+        String parsedRightString = "";
+        
 
         
 
         for (String operator : orderOfOperations) {
-            inputString = removeOutsideParenthesis(inputString);
+            int rightParenthesis = 0;
+            int leftParenthesis = 0;
+            if (checkParenthesis(removeOutsideParenthesis(inputString))) inputString = removeOutsideParenthesis(inputString); //if valid parenthesis after string removed
             int i = inputString.length() - 1;
 
             char[] inputcharArray = inputString.toCharArray();
@@ -119,84 +128,49 @@ public class Operator_Reader {
             if (!operatorFound) {                                       // find first occurance of lowest operator
                 while(i >= 0 && !operatorFound) {
                     if(inputcharArray[i] == ')') {                       //skip parenthesis
+                        rightParenthesis++;
                         insideParenthesis = true;
+                        
                     } else if (inputcharArray[i] == '(') {
-                        insideParenthesis = false;
+                        leftParenthesis++;
+                        if (rightParenthesis == leftParenthesis) insideParenthesis = false;
                     }
-                    if(!insideParenthesis) {
+                    
+                    if(!insideParenthesis) {        // skip parenthesis to parse them last
                         if(String.format("%c", inputcharArray[i]).equals(operator)) { // if operator found
                             operatorFound = true;
-                            leftString = searchLeft(inputcharArray, i);
-                            rightString = searchRight(inputcharArray, i);
+                            if (operator.equals("¬"))notOperatorFound = true;
+
+                            leftString = inputString.substring(0, i);
+                            rightString = inputString.substring(i+1, inputString.length());
+
 
                             if (propositions.contains(leftString)) { // compile left string to proposition 
-                                compiledLeftString = leftString;
+                                parsedLeftString = leftString;
                             } else {
-                                compiledLeftString = parseString(leftString);
+                                if (leftString != "") parsedLeftString = parseString(leftString);
                             }
 
                             if (propositions.contains(rightString)) { // compile right string to proposition
-                                compiledRightString = rightString;
+                                if (rightString != "") parsedRightString = rightString;
                             } else {
-                                compiledRightString = parseString(rightString);
+                                parsedRightString = parseString(rightString);
                             }
                         } 
                     }
                     i--;
                 }
-                if (operatorFound) return (String.format("%s%s%s", operator, compiledLeftString, compiledRightString));
+                
+
+                if (notOperatorFound) return String.format("%s%s", operator, parsedRightString);
+                if (operatorFound && (parsedLeftString.equals("") || parsedRightString.equals(""))) return "Invalid String";
+                if (operatorFound && (parsedLeftString == "Invalid String" || parsedRightString == "Invalid String")) return "Invalid String";
+                if (operatorFound) return (String.format("%s%s%s", operator, parsedLeftString, parsedRightString));
+                
             }
         }
         return "";
     }
-    
-
-    public String searchLeft(char[] inputcharArray, int indexOfOperator) {
-        String leftString = "";
-        List<String> leftOfOperator = new ArrayList<>();
-        for (int i = 0; i < indexOfOperator; i++) {// Add to left of operator list
-            leftOfOperator.add(Character.toString(inputcharArray[i]));
-        }
-        
-
-        if (propositions.contains(leftOfOperator.get(leftOfOperator.size() -1)) && leftOfOperator.size() == 1) { // if left is a singular proposition
-            return leftOfOperator.get(0);
-        } else if (leftOfOperator.get(leftOfOperator.size() - 1).equals(")") && leftOfOperator.get(0).equals("(")) { // if left is only parenthesis
-            for (int i = 1; i < leftOfOperator.size() -1; i++) {
-                leftString += leftOfOperator.get(i);
-            }
-        } else { // needs to be broken down further therefore return entire left
-            for (String element : leftOfOperator) {
-                leftString += element;
-            }
-        }
-
-
-        return leftString;
-    }
-    
-    public String searchRight(char[] inputcharArray, int indexOfOperator) {
-        String rightString = "";
-        List<String> rightOfOperator = new ArrayList<>();
-        for (int i = indexOfOperator + 1; i < inputcharArray.length; i++) {// Add to right of operator list
-            rightOfOperator.add(Character.toString(inputcharArray[i]));
-        }
-        
-
-        if (propositions.contains(rightOfOperator.get(rightOfOperator.size() - 1)) && rightOfOperator.size() == 1) { // if right is a singular proposition
-            return rightOfOperator.get(0);
-        } else if (rightOfOperator.get(0).equals("(") && rightOfOperator.get(rightOfOperator.size() - 1).equals(")")) { // if right is only parenthesis
-            for (int i = 1; i < rightOfOperator.size() -1; i++) {
-                rightString += rightOfOperator.get(i);
-            }
-        } else { // needs to be broken down further therefore return entire left
-            for (String element : rightOfOperator) {
-                rightString += element;
-            }
-        }
-        
-        return rightString;
-    }   
 
     @Override
     public String toString() {

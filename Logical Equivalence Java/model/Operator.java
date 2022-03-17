@@ -64,6 +64,12 @@ public class Operator implements Unit{
         }
     }
     public void logically_equivalent(Unit unit1, Unit unit2) {
-
+        boolean[] truthTable1 = unit1.getTruthTable();
+        boolean[] truthTable2 = unit2.getTruthTable();
+        int i = 0;
+        while(i < size) {
+            truthTable[i] = (truthTable1[i] && truthTable2[i]);
+            i++;
+        }
     }
 }
