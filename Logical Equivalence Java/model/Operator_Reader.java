@@ -56,8 +56,8 @@ public class Operator_Reader {
                 leftParenthesis++;
             }
             if (ch == ')') {
-                if (leftParenthesis < 1) return false;
                 rightParenthesis++;
+                if (rightParenthesis > leftParenthesis) return false;
             }
         }
         if (leftParenthesis == rightParenthesis) return true;
