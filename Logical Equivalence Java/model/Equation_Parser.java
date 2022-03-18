@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Operator_Reader {
+public class Equation_Parser {
     private String inputString;
     private String compiledString;
     private boolean validInput;
@@ -14,7 +14,7 @@ public class Operator_Reader {
 
     //can revise with 
 
-    public Operator_Reader(String inputString) {
+    public Equation_Parser(String inputString) {
         this.inputString = inputString;
         removeSpaces();
 
@@ -99,6 +99,7 @@ public class Operator_Reader {
     public void parseInput() {        
         if (validInput) {
             this.compiledString = parseString(this.inputString);
+            if (compiledString.equals("")) compiledString = "Invalid Input";
         } else {
             this.compiledString = "Invalid Input";
         }
@@ -162,7 +163,9 @@ public class Operator_Reader {
                 }
                 
 
+
                 if (notOperatorFound) return String.format("%s%s", operator, parsedRightString);
+                if (propositions.contains(inputString)) return inputString;
                 if (operatorFound && (parsedLeftString.equals("") || parsedRightString.equals(""))) return "Invalid String";
                 if (operatorFound && (parsedLeftString == "Invalid String" || parsedRightString == "Invalid String")) return "Invalid String";
                 if (operatorFound) return (String.format("%s%s%s", operator, parsedLeftString, parsedRightString));
@@ -175,5 +178,18 @@ public class Operator_Reader {
     @Override
     public String toString() {
         return compiledString;
+    }
+
+
+    public static void main(String[] args) {
+        Equation_Parser string1 = new Equation_Parser("(p → q v (q → p) ^ s v r)");
+      Equation_Parser string2 = new Equation_Parser("(q → p) ^ p");
+      Equation_Parser string3 = new Equation_Parser("(r ^ (q → s) ^ q ^ p)"); 
+      Equation_Parser string4 = new Equation_Parser("(¬r ^ (q → s) ^ q ^ p)");
+      Equation_Parser string5 = new Equation_Parser("¬(¬r ^ (q → s) ^ q ^ p) → (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
+      Equation_Parser string6 = new Equation_Parser("(¬r ^ (q → s) ^ q ^ p)) ^ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
+      Equation_Parser string7 = new Equation_Parser("¬r^(q→s)^q^p)^(¬r^(q→s)^q^p");
+      Equation_Parser string8 = new Equation_Parser("((q → p) ^ (p))"); 
+      System.out.println("");
     }
 }

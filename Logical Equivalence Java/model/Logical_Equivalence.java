@@ -1,8 +1,7 @@
 package model;
 
 public class Logical_Equivalence {
-    // ^ _  - > >>
-    // private tr
+    
 
     
 
