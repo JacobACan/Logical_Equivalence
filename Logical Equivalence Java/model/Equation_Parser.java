@@ -91,12 +91,8 @@ public class Equation_Parser {
         }
         return removedParenthesisString;
     }
-    
-    public void compileString() {
-        this.compiledString = parseString(this.inputString);
-    }
 
-    public void parseInput() {        
+    private void parseInput() {        
         if (validInput) {
             this.compiledString = parseString(this.inputString);
             if (compiledString.equals("")) compiledString = "Invalid Input";

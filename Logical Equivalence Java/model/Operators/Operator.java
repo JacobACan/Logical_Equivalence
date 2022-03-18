@@ -4,7 +4,7 @@ public abstract class Operator implements Unit{
     protected boolean[] truthTable;
     protected int size;
 
-    public Operator(int size, boolean[] truthTable) {
+    public Operator(int size) {
         this.size = size;
         this.truthTable = new boolean[size];
     }

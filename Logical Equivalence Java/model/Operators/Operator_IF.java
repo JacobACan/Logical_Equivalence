@@ -1,18 +1,19 @@
 package model.Operators;
 
 public class Operator_IF extends Operator{
-    private Unit leftOperator;
-    private Unit rightOperator;
-    public Operator_IF(int size, boolean[] truthTable, Operator leftOperator, Operator rightOperator) {
-        super(size, truthTable);
-        this.leftOperator = leftOperator;
-        this.rightOperator = rightOperator;
+    private Unit leftUnit;
+    private Unit rightUnit;
+    public Operator_IF(int size, Unit leftUnit, Unit rightUnit) {
+        super(size);
+        this.leftUnit = leftUnit;
+        this.rightUnit = rightUnit;
+        evaluate();
     }
 
     @Override
     public void evaluate() {
-        boolean[] truthTable1 = leftOperator.getTruthTable();
-        boolean[] truthTable2 = rightOperator.getTruthTable();
+        boolean[] truthTable1 = leftUnit.getTruthTable();
+        boolean[] truthTable2 = rightUnit.getTruthTable();
         int i = 0;
         while(i < size) {
             if (!truthTable[i]) {
