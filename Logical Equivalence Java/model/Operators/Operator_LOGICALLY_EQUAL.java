@@ -16,7 +16,11 @@ public class Operator_LOGICALLY_EQUAL extends Operator{
         boolean[] truthTable2 = rightUnit.getTruthTable();
         int i = 0;
         while(i < size) {
-            truthTable[i] = (truthTable1[i] && truthTable2[i]);
+            if (!truthTable1[i] && !truthTable2[i]) {
+                truthTable[i] = true;
+            } else {
+                truthTable[i] = (truthTable1[i] && truthTable2[i]);
+            }
             i++;
         }
     }

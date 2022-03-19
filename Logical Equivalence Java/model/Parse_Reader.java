@@ -37,6 +37,12 @@ public class Parse_Reader {
     }
 
     private Unit readParsedString(String parsedString) {
+        if (parsedString == null) return null;
+        pointer = 0;
+        size = 0;
+        propositionNumber = 0;
+        propositionsNumbers = new HashMap<>();
+
         findSize(parsedString);
         findPropositionNumber(parsedString);
         Unit parsedStringAsUnit = makeParsedString(parsedString, pointer);
@@ -102,18 +108,22 @@ public class Parse_Reader {
     public static void main(String[] args) {
         Equation_Parser string1 = new Equation_Parser("p ∧ q"); //Good 
         Equation_Parser string2 = new Equation_Parser("p ∨ q"); //Good
-        Equation_Parser string3 = new Equation_Parser("p → q"); //Bad
+        Equation_Parser string3 = new Equation_Parser("p → q"); //Good
         Equation_Parser string4 = new Equation_Parser("p ↔ q"); //Bad
         Equation_Parser string5 = new Equation_Parser("p ≡ q"); //Bad
         Equation_Parser string6 = new Equation_Parser("p ∧ ¬q"); //Good
-        // Equation_Parser string10 = new Equation_Parser("¬(¬r ↔ (q → s) ^ q v p) ≡ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
 
-        Parse_Reader truthtable1 = new Parse_Reader(string1.toString());
-        Parse_Reader truthtable2 = new Parse_Reader(string2.toString());
-        Parse_Reader truthtable3 = new Parse_Reader(string3.toString());
-        Parse_Reader truthtable4 = new Parse_Reader(string4.toString());
-        Parse_Reader truthtable5 = new Parse_Reader(string5.toString());
-        Parse_Reader truthtable6 = new Parse_Reader(string6.toString());
+        Equation_Parser string10 = new Equation_Parser("¬(¬r ↔ (q → s) ^ q v p) ≡ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
+
+
+        Parse_Reader parseReader1 = new Parse_Reader(string1.toString());
+        Parse_Reader parseReader2 = new Parse_Reader(string2.toString());
+        Parse_Reader parseReader3 = new Parse_Reader(string3.toString());
+        Parse_Reader parseReader4 = new Parse_Reader(string4.toString());
+        Parse_Reader parseReader5 = new Parse_Reader(string5.toString());
+        Parse_Reader parseReader6 = new Parse_Reader(string6.toString());
+
+        Parse_Reader parseReader10 = new Parse_Reader(string10.toString());
 
         System.out.println("x");
     }

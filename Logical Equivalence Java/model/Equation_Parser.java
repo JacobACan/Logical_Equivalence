@@ -85,10 +85,10 @@ public class Equation_Parser {
     private void parseInput() {        
         if (validInput) {
             this.compiledString = parseString(this.inputString);
-            if (compiledString.equals("")) compiledString = "Invalid Input";
-            if (compiledString.equals("Invalid String")) compiledString = "Invalid Input";
+            if (compiledString.equals("")) compiledString = null;
+            if (compiledString.equals("Invalid String")) compiledString = null;
         } else {
-            this.compiledString = "Invalid Input";
+            this.compiledString = null;
         }
     }
 
@@ -159,7 +159,7 @@ public class Equation_Parser {
                 if (notOperatorFound && rightString!= "") return String.format("%s%s", operator, parsedRightString);
                 if (inputString.length() == 1 && propositions.contains(inputString.substring(0, 1)) ) return inputString;
                 if (operatorFound && (parsedLeftString.equals("") || parsedRightString.equals(""))) return "Invalid String";
-                if (operatorFound && (parsedLeftString == "Invalid String" || parsedRightString == "Invalid String")) return "Invalid String";
+                if (operatorFound && (parsedLeftString.contains("Invalid String") || parsedRightString.contains("Invalid String"))) return "Invalid String";
                 if (operatorFound) return (String.format("%s%s%s", operator, parsedLeftString, parsedRightString));
                 
             }
