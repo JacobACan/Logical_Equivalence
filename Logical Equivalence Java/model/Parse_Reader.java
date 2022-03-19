@@ -1,10 +1,7 @@
 package model;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-
 import model.Operators.Operator_AND;
 import model.Operators.Operator_IF;
 import model.Operators.Operator_IFF;
@@ -18,6 +15,8 @@ import model.Operators.Unit;
 public class Parse_Reader {
     private static int size = 0;
     private static char[] operators = {'≡', '↔', '→', 'v', '^', '¬'};
+    private static int propositionNumber = 1;
+    private static Map<Character, Integer> propositionsNumbers = new HashMap<>();
 
     public static Unit parseReader(String parsedString) {
         findSize(parsedString);
@@ -27,32 +26,24 @@ public class Parse_Reader {
     }
 
     private static Unit makeParsedString(String parsedString, int i) {
-        int propositionNumber = 1;
-        Map<Character, Integer> propositionsNumbers = new HashMap<>();
 
 
         if (parsedString.charAt(i) == '≡') {
-            i += 3;
             return new Operator_LOGICALLY_EQUAL(size, makeParsedString(parsedString, i+1), makeParsedString(parsedString, i+2));
 
         } else if (parsedString.charAt(i) == '↔') {
-            i += 3;
             return new Operator_IFF(size, makeParsedString(parsedString, i+1), makeParsedString(parsedString, i+2));
 
         } else if (parsedString.charAt(i) == '→') {
-            i += 3;
             return new Operator_IF(size, makeParsedString(parsedString, i+1), makeParsedString(parsedString, i+2));
 
         } else if (parsedString.charAt(i) == 'v') {
-            i += 3;
             return new Operator_OR(size, makeParsedString(parsedString, i+1), makeParsedString(parsedString, i+2));
 
         } else if (parsedString.charAt(i) == '^') {
-            i += 3;
             return new Operator_AND(size, makeParsedString(parsedString, i+1), makeParsedString(parsedString, i+2));
 
         } else if (parsedString.charAt(i) == '¬') {
-            i+= 2;
             return new Operator_NOT(size, makeParsedString(parsedString, i+1));
 
         } else if (Character.isAlphabetic(parsedString.charAt(i))) {
@@ -66,13 +57,19 @@ public class Parse_Reader {
     }
 
     private static void findSize(String parsedString) {
-        //2^n
+        //size = 2^n
         int n = 0;
         char[] parsedCharArray = parsedString.toCharArray();
         for (char ch: parsedCharArray) {
             if (Character.isAlphabetic(ch)) n++;
         }
-
         size = (int) Math.pow(2, n);
+    }
+
+    public static void main(String[] args) {
+        Equation_Parser string5 = new Equation_Parser("¬(¬r ↔ (q → s) ^ q ^ p) ≡ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
+        Unit logicEQ1 = parseReader(string5.getParsedString());
+
+        System.out.println("x");
     }
 }

@@ -10,16 +10,13 @@ public class Equation_Parser {
     private String compiledString;
     private boolean validInput;
     private List<String> orderOfOperations;
-    private  Set<String> propositions = new HashSet<>();
+    
 
     //can revise with 
 
     public Equation_Parser(String inputString) {
         this.inputString = inputString;
         removeSpaces();
-
-        this.propositions = new HashSet<>();
-        setPropositions();
 
         this.orderOfOperations = new ArrayList<>();
         setOrderOfOperations();
@@ -30,14 +27,6 @@ public class Equation_Parser {
         parseInput();
     }
     
-    
-    private void setPropositions() {
-        //{'p','q','r','s'};
-        propositions.add("p");
-        propositions.add("q");
-        propositions.add("r");
-        propositions.add("s");
-    }
     private void setOrderOfOperations() {
         orderOfOperations.add("≡");
         orderOfOperations.add("↔");
@@ -76,7 +65,8 @@ public class Equation_Parser {
     }
     private String removeOutsideParenthesis(String string) {
         String removedParenthesisString = string;
-         char[] StringArray = string.toCharArray();
+        char[] StringArray = string.toCharArray();
+        if (string.length() == 0) return removedParenthesisString;
         if (StringArray[StringArray.length - 1] == ')' &&  StringArray[0] == '(' ) {
 
             StringArray[StringArray.length - 1] = ' ';
@@ -96,6 +86,7 @@ public class Equation_Parser {
         if (validInput) {
             this.compiledString = parseString(this.inputString);
             if (compiledString.equals("")) compiledString = "Invalid Input";
+            if (compiledString.equals("Invalid String")) compiledString = "Invalid Input";
         } else {
             this.compiledString = "Invalid Input";
         }
@@ -136,19 +127,24 @@ public class Equation_Parser {
                     if(!insideParenthesis) {        // skip parenthesis to parse them last
                         if(String.format("%c", inputcharArray[i]).equals(operator)) { // if operator found
                             operatorFound = true;
-                            if (operator.equals("¬"))notOperatorFound = true;
+                            if (operator.equals("¬")){
+                                notOperatorFound = true;
+                                leftString = inputString.substring(0, i);
+                                if (inputString.length()-leftString.length() > 1) rightString = inputString.substring(i+1, inputString.length());
+                            } else {
+                                leftString = inputString.substring(0, i);
+                                rightString = inputString.substring(i+1, inputString.length());
+                            }
 
-                            leftString = inputString.substring(0, i);
-                            rightString = inputString.substring(i+1, inputString.length());
 
 
-                            if (propositions.contains(leftString)) { // compile left string to proposition 
+                            if (leftString.length() == 1 && Character.isAlphabetic(leftString.charAt(0))) { // compile left string to proposition 
                                 parsedLeftString = leftString;
                             } else {
                                 if (leftString != "") parsedLeftString = parseString(leftString);
                             }
 
-                            if (propositions.contains(rightString)) { // compile right string to proposition
+                            if (rightString.length() == 1 && Character.isAlphabetic(rightString.charAt(0))) { // compile right string to proposition
                                 if (rightString != "") parsedRightString = rightString;
                             } else {
                                 parsedRightString = parseString(rightString);
@@ -160,8 +156,8 @@ public class Equation_Parser {
                 
 
 
-                if (notOperatorFound) return String.format("%s%s", operator, parsedRightString);
-                if (propositions.contains(inputString)) return inputString;
+                if (notOperatorFound && rightString!= "") return String.format("%s%s", operator, parsedRightString);
+                if (inputString.length() == 1 && Character.isAlphabetic(inputString.charAt(0))) return inputString;
                 if (operatorFound && (parsedLeftString.equals("") || parsedRightString.equals(""))) return "Invalid String";
                 if (operatorFound && (parsedLeftString == "Invalid String" || parsedRightString == "Invalid String")) return "Invalid String";
                 if (operatorFound) return (String.format("%s%s%s", operator, parsedLeftString, parsedRightString));
@@ -176,16 +172,21 @@ public class Equation_Parser {
         return compiledString;
     }
 
+    public String getParsedString() {
+        return compiledString;
+    }
+
 
     public static void main(String[] args) {
         Equation_Parser string1 = new Equation_Parser("(p → q v (q → p) ^ s v r)");
-      Equation_Parser string2 = new Equation_Parser("(q → p) ^ p");
-      Equation_Parser string3 = new Equation_Parser("(r ^ (q → s) ^ q ^ p)"); 
-      Equation_Parser string4 = new Equation_Parser("(¬r ^ (q → s) ^ q ^ p)");
-      Equation_Parser string5 = new Equation_Parser("¬(¬r ^ (q → s) ^ q ^ p) → (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
-      Equation_Parser string6 = new Equation_Parser("(¬r ^ (q → s) ^ q ^ p)) ^ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
-      Equation_Parser string7 = new Equation_Parser("¬r^(q→s)^q^p)^(¬r^(q→s)^q^p");
-      Equation_Parser string8 = new Equation_Parser("((q → p) ^ (p))"); 
-      System.out.println("");
+        Equation_Parser string2 = new Equation_Parser("(q → p) ^ p");
+        Equation_Parser string3 = new Equation_Parser("(r ^ (q → s) ^ q ^ p)"); 
+        Equation_Parser string4 = new Equation_Parser("(¬r ^ (q → s) ^ q ^ p)");
+        Equation_Parser string5 = new Equation_Parser("¬(¬r ↔ (q → s) ^ q ^ p) ≡ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
+        Equation_Parser string6 = new Equation_Parser("(¬r ^ (q → s) ^ q ^ p)) ^ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
+        Equation_Parser string7 = new Equation_Parser("¬r^(q→s)^q^p)^(¬r^(q→s)^q^p");
+        Equation_Parser string8 = new Equation_Parser("((q → p) ^ (p))"); 
+        Equation_Parser string9 = new Equation_Parser("((q → p) ^ ¬(¬p))"); 
+        System.out.println("");
     }
 }
