@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import model.Operators.OperatorType;
 import model.Operators.Operator_AND;
 import model.Operators.Operator_IF;
 import model.Operators.Operator_IFF;
@@ -16,41 +17,54 @@ import model.Operators.Unit;
 
 
 public class Parse_Reader {
-    private static int size = 0;
-    private static char[] operators = {'≡', '↔', '→', 'v', '^', '¬'};
-    private static int propositionNumber = 0;
-    private static Map<Character, Integer> propositionsNumbers = new HashMap<>();
-    private static int pointer = 0;
+    private int size;
+    private int propositionNumber;
+    private Map<Character, Integer> propositionsNumbers;
+    private int pointer;
+    private Unit unit;
 
-    public static Unit parseReader(String parsedString) {
+    public Parse_Reader(String parsedString) {
+        this.size = 0;
+        this.propositionNumber = 0;
+        this.propositionsNumbers = new HashMap<>();
+        this.pointer = 0;
+
+        this.unit = readParsedString(parsedString);
+    }
+
+    public Unit getUnit() {
+      return unit;
+    }
+
+    private Unit readParsedString(String parsedString) {
         findSize(parsedString);
         findPropositionNumber(parsedString);
         Unit parsedStringAsUnit = makeParsedString(parsedString, pointer);
         return parsedStringAsUnit;
     }
 
-    private static Unit makeParsedString(String parsedString, int i) {
+    private Unit makeParsedString(String parsedString, int i) {
 
 
-        if (parsedString.charAt(i) == '≡') {
+        if (parsedString.charAt(i) == OperatorType.LOGICALLY_EQUAL.toString().charAt(0)) { //if parsedString[i] logically equal
             return new Operator_LOGICALLY_EQUAL(size, makeParsedString(parsedString, ++pointer), makeParsedString(parsedString, ++pointer));
 
-        } else if (parsedString.charAt(i) == '↔') {
+        } else if (parsedString.charAt(i) == OperatorType.IFF.toString().charAt(0)) { //if parsedString[i] iff
             return new Operator_IFF(size, makeParsedString(parsedString, ++pointer), makeParsedString(parsedString, ++pointer));
 
-        } else if (parsedString.charAt(i) == '→') {
+        } else if (parsedString.charAt(i) == OperatorType.IF.toString().charAt(0)) { //if parsedString[i] if
             return new Operator_IF(size, makeParsedString(parsedString, ++pointer), makeParsedString(parsedString, ++pointer));
 
-        } else if (parsedString.charAt(i) == '∨') {
+        } else if (parsedString.charAt(i) == OperatorType.OR.toString().charAt(0)) { //if parsedString[i] or
             return new Operator_OR(size, makeParsedString(parsedString, ++pointer), makeParsedString(parsedString, ++pointer));
 
-        } else if (parsedString.charAt(i) == '∧') {
+        } else if (parsedString.charAt(i) == OperatorType.AND.toString().charAt(0)) { //if parsedString[i] and
             return new Operator_AND(size, makeParsedString(parsedString, ++pointer), makeParsedString(parsedString, ++pointer));
 
-        } else if (parsedString.charAt(i) == '¬') {
+        } else if (parsedString.charAt(i) == OperatorType.NOT.toString().charAt(0)) { //if parsedString[i] not
             return new Operator_NOT(size, makeParsedString(parsedString, ++pointer));
 
-        } else if (Character.isAlphabetic(parsedString.charAt(pointer))) {
+        } else if ( OperatorType.PROPOSITION.toString().contains(Character.toString(parsedString.charAt(pointer))) ) {
             return new Operator_PROPOSITION(size, propositionsNumbers.get(parsedString.charAt(pointer)));
 
         } else {
@@ -58,7 +72,7 @@ public class Parse_Reader {
         }
     }
 
-    private static void findSize(String parsedString) {
+    private void findSize(String parsedString) {
         //size = 2^n
         Set<Character> propositions = new HashSet<>();
         char[] parsedCharArray = parsedString.toCharArray();
@@ -67,7 +81,7 @@ public class Parse_Reader {
         }
         size = (int) Math.pow(2, propositions.size());
     }
-    private static void findPropositionNumber(String parsedString) {
+    private void findPropositionNumber(String parsedString) {
         char[] parsedCharArray = parsedString.toCharArray();
         for (char ch: parsedCharArray) {
             if (Character.isAlphabetic(ch)) {
@@ -79,23 +93,27 @@ public class Parse_Reader {
         }
     }
 
+    @Override
+    public String toString() {
+        return this.unit.getTruthTable().toString();
+    }
+
 
     public static void main(String[] args) {
-        Equation_Parser string1 = new Equation_Parser("p ∧ q"); 
-        Equation_Parser string2 = new Equation_Parser("p ∨ q");
-        Equation_Parser string3 = new Equation_Parser("p → q");//
-        Equation_Parser string4 = new Equation_Parser("p ↔ q");
-        Equation_Parser string5 = new Equation_Parser("p ≡ q");
-        Equation_Parser string6 = new Equation_Parser("p ∧ ¬q"); 
+        Equation_Parser string1 = new Equation_Parser("p ∧ q"); //Good 
+        Equation_Parser string2 = new Equation_Parser("p ∨ q"); //Good
+        Equation_Parser string3 = new Equation_Parser("p → q"); //Bad
+        Equation_Parser string4 = new Equation_Parser("p ↔ q"); //Bad
+        Equation_Parser string5 = new Equation_Parser("p ≡ q"); //Bad
+        Equation_Parser string6 = new Equation_Parser("p ∧ ¬q"); //Good
         // Equation_Parser string10 = new Equation_Parser("¬(¬r ↔ (q → s) ^ q v p) ≡ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
 
-        Unit logicEQ1 = parseReader(string1.getParsedString());
-        Unit logicEQ2 = parseReader(string2.getParsedString());
-        Unit logicEQ3 = parseReader(string3.getParsedString());
-        Unit logicEQ4 = parseReader(string4.getParsedString());
-        Unit logicEQ5 = parseReader(string5.getParsedString());
-        Unit logicEQ6 = parseReader(string6.getParsedString());
-        // Unit logicEQ10 = parseReader(string10.getParsedString());
+        Parse_Reader truthtable1 = new Parse_Reader(string1.toString());
+        Parse_Reader truthtable2 = new Parse_Reader(string2.toString());
+        Parse_Reader truthtable3 = new Parse_Reader(string3.toString());
+        Parse_Reader truthtable4 = new Parse_Reader(string4.toString());
+        Parse_Reader truthtable5 = new Parse_Reader(string5.toString());
+        Parse_Reader truthtable6 = new Parse_Reader(string6.toString());
 
         System.out.println("x");
     }
