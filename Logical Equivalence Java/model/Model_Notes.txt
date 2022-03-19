@@ -1,0 +1,2 @@
+Make propositions enumeration
+make parser a class
