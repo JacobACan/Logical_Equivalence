@@ -6,8 +6,8 @@ public enum OperatorType {
     OR("∨"),
     IF("→"),
     IFF("↔"),
-    PROPOSITION("abcdefghijklmnopqrstuvwxyz"),
-    LOGICALLY_EQUAL("≡");
+    LOGICALLY_EQUAL("≡"),
+    PROPOSITION("qwertyuiopasdfghjklzxcvbnm");
     ;
 
     private final String text;

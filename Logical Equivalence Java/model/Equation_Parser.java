@@ -10,11 +10,14 @@ public class Equation_Parser {
     private String compiledString;
     private boolean validInput;
     private List<String> orderOfOperations;
+    private String propositions;
     
 
     //can revise with 
 
     public Equation_Parser(String inputString) {
+        this.propositions = OperatorType.PROPOSITION.toString();
+
         this.inputString = inputString;
         removeSpaces();
 
@@ -138,13 +141,13 @@ public class Equation_Parser {
 
 
 
-                            if (leftString.length() == 1 && Character.isAlphabetic(leftString.charAt(0))) { // compile left string to proposition 
+                            if (leftString.length() == 1 && propositions.contains(leftString.substring(0, 1)) ) { // compile left string to proposition 
                                 parsedLeftString = leftString;
                             } else {
                                 if (leftString != "") parsedLeftString = parseString(leftString);
                             }
 
-                            if (rightString.length() == 1 && Character.isAlphabetic(rightString.charAt(0))) { // compile right string to proposition
+                            if (rightString.length() == 1 && propositions.contains(rightString.substring(0, 1))) { // compile right string to proposition
                                 if (rightString != "") parsedRightString = rightString;
                             } else {
                                 parsedRightString = parseString(rightString);
@@ -157,7 +160,7 @@ public class Equation_Parser {
 
 
                 if (notOperatorFound && rightString!= "") return String.format("%s%s", operator, parsedRightString);
-                if (inputString.length() == 1 && Character.isAlphabetic(inputString.charAt(0))) return inputString;
+                if (inputString.length() == 1 && propositions.contains(inputString.substring(0, 1)) ) return inputString;
                 if (operatorFound && (parsedLeftString.equals("") || parsedRightString.equals(""))) return "Invalid String";
                 if (operatorFound && (parsedLeftString == "Invalid String" || parsedRightString == "Invalid String")) return "Invalid String";
                 if (operatorFound) return (String.format("%s%s%s", operator, parsedLeftString, parsedRightString));
