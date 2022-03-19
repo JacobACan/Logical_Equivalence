@@ -2,7 +2,7 @@ package model.Operators;
 
 public abstract class Operator implements Unit{
     protected boolean[] truthTable;
-    protected int size;
+    public int size;
 
     public Operator(int size) {
         this.size = size;

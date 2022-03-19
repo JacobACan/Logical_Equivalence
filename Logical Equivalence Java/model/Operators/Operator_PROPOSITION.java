@@ -11,13 +11,13 @@ public class Operator_PROPOSITION extends Operator{
     @Override
     public void evaluate() {
         int i = 0;
-        int truthSwitchLengt = (int) Math.pow(2, propositionNumber);
+        int truthSwitchLength = ((int) Math.pow(2, propositionNumber) * 2) / this.size;
         while(i < truthTable.length) {
-            for(int j = 0; j < truthSwitchLengt; j++) {
+            for(int j = 0; j < truthSwitchLength; j++) {
                 truthTable[i] = false;
                 i++;
             }
-            for(int j = 0; j < truthSwitchLengt; j++) {
+            for(int j = 0; j < truthSwitchLength; j++) {
                 truthTable[i] = true;
                 i++;
             }

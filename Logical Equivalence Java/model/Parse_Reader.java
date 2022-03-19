@@ -106,14 +106,17 @@ public class Parse_Reader {
 
 
     public static void main(String[] args) {
-        Equation_Parser string1 = new Equation_Parser("p ∧ q"); //Good 
-        Equation_Parser string2 = new Equation_Parser("p ∨ q"); //Good
-        Equation_Parser string3 = new Equation_Parser("p → q"); //Good
-        Equation_Parser string4 = new Equation_Parser("p ↔ q"); //Bad
-        Equation_Parser string5 = new Equation_Parser("p ≡ q"); //Bad
-        Equation_Parser string6 = new Equation_Parser("p ∧ ¬q"); //Good
+        Equation_Parser string1 = new Equation_Parser("p ∧ q"); 
+        Equation_Parser string2 = new Equation_Parser("p ∨ q"); 
+        Equation_Parser string3 = new Equation_Parser("p → q"); 
+        Equation_Parser string4 = new Equation_Parser("p ↔ q"); 
+        Equation_Parser string5 = new Equation_Parser("p ≡ q"); 
+        Equation_Parser string6 = new Equation_Parser("p ∧ ¬q"); 
+        //Logically Equal Test
+        Equation_Parser string7 = new Equation_Parser("(p → q) ≡ (¬p ∨ q)"); 
 
-        Equation_Parser string10 = new Equation_Parser("¬(¬r ↔ (q → s) ^ q v p) ≡ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
+
+        Equation_Parser string10 = new Equation_Parser("¬(¬r ↔ (q → s) ∧ q ∨ p) ≡ (¬r ∧ (¬q → ¬s) ∧ q ∧ ¬p)");
 
 
         Parse_Reader parseReader1 = new Parse_Reader(string1.toString());
@@ -122,6 +125,7 @@ public class Parse_Reader {
         Parse_Reader parseReader4 = new Parse_Reader(string4.toString());
         Parse_Reader parseReader5 = new Parse_Reader(string5.toString());
         Parse_Reader parseReader6 = new Parse_Reader(string6.toString());
+        Parse_Reader parseReader7 = new Parse_Reader(string7.toString());
 
         Parse_Reader parseReader10 = new Parse_Reader(string10.toString());
 
