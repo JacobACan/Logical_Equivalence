@@ -16,10 +16,10 @@ public class Operator_IF extends Operator{
         boolean[] truthTable2 = rightUnit.getTruthTable();
         int i = 0;
         while(i < size) {
-            if (!truthTable[i]) {
+            if (truthTable1[i]) {
                 truthTable[i] = true;
-            } else if (truthTable2[i]) {
-                truthTable1[i] = true;
+            } else if (!truthTable2[i]) {
+                truthTable[i] = true;
             } else {
                 truthTable[i] = false;
             }

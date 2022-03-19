@@ -11,10 +11,7 @@ public class Equation_Parser {
     private boolean validInput;
     private List<String> orderOfOperations;
     private String propositions;
-    
-
-    //can revise with 
-
+ 
     public Equation_Parser(String inputString) {
         this.propositions = OperatorType.PROPOSITION.toString();
 
