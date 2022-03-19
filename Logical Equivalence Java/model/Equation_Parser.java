@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Operators.OperatorType;
+
 public class Equation_Parser {
     private String inputString;
     private String compiledString;
@@ -26,12 +28,12 @@ public class Equation_Parser {
     }
     
     private void setOrderOfOperations() {
-        orderOfOperations.add("≡");
-        orderOfOperations.add("↔");
-        orderOfOperations.add("→");
-        orderOfOperations.add("∨");
-        orderOfOperations.add("∧");
-        orderOfOperations.add("¬");
+        orderOfOperations.add(OperatorType.LOGICALLY_EQUAL.toString());
+        orderOfOperations.add(OperatorType.IFF.toString());
+        orderOfOperations.add(OperatorType.IF.toString());
+        orderOfOperations.add(OperatorType.OR.toString());
+        orderOfOperations.add(OperatorType.AND.toString());
+        orderOfOperations.add(OperatorType.NOT.toString());
     }
 
     private boolean checkParenthesis(String inputString) {
@@ -125,7 +127,7 @@ public class Equation_Parser {
                     if(!insideParenthesis) {        // skip parenthesis to parse them last
                         if(String.format("%c", inputcharArray[i]).equals(operator)) { // if operator found
                             operatorFound = true;
-                            if (operator.equals("¬")){
+                            if (operator.equals(OperatorType.NOT.toString())){
                                 notOperatorFound = true;
                                 leftString = inputString.substring(0, i);
                                 if (inputString.length()-leftString.length() > 1) rightString = inputString.substring(i+1, inputString.length());
@@ -176,7 +178,13 @@ public class Equation_Parser {
 
 
     public static void main(String[] args) {
-        
+        Equation_Parser string1 = new Equation_Parser("p ∧ q"); 
+        Equation_Parser string2 = new Equation_Parser("p ∨ q");
+        Equation_Parser string3 = new Equation_Parser("p → q");
+        Equation_Parser string4 = new Equation_Parser("p ↔ q");
+        Equation_Parser string5 = new Equation_Parser("p ≡ q");
+        Equation_Parser string6 = new Equation_Parser("p ∧ ¬q"); 
+
         System.out.println("");
     }
 }

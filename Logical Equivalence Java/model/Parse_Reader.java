@@ -81,7 +81,7 @@ public class Parse_Reader {
 
 
     public static void main(String[] args) {
-        // Equation_Parser string1 = new Equation_Parser("p ∧ q"); 
+        Equation_Parser string1 = new Equation_Parser("p ∧ q"); 
         Equation_Parser string2 = new Equation_Parser("p ∨ q");
         Equation_Parser string3 = new Equation_Parser("p → q");//
         Equation_Parser string4 = new Equation_Parser("p ↔ q");
@@ -89,7 +89,7 @@ public class Parse_Reader {
         Equation_Parser string6 = new Equation_Parser("p ∧ ¬q"); 
         // Equation_Parser string10 = new Equation_Parser("¬(¬r ↔ (q → s) ^ q v p) ≡ (¬r ^ (¬q → ¬s) ^ q ^ ¬p)");
 
-        // Unit logicEQ1 = parseReader(string1.getParsedString());
+        Unit logicEQ1 = parseReader(string1.getParsedString());
         Unit logicEQ2 = parseReader(string2.getParsedString());
         Unit logicEQ3 = parseReader(string3.getParsedString());
         Unit logicEQ4 = parseReader(string4.getParsedString());
