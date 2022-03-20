@@ -1,5 +1,6 @@
 package model.Operators;
 
+
 public class Operator_LOGICALLY_EQUAL extends Operator{
     private Unit leftUnit;
     private Unit rightUnit;

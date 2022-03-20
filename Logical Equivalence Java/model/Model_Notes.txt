@@ -1,2 +1,18 @@
-Make propositions enumeration
-make parser a class
+Start logical_equivalence final model user interface through terminal
+  -equation1 : String
+  -equation2 : String
+  -logicalEquivalenceEquation : String
+  -parsedLogicalEquivalenceEquation : String
+  -logicalEquivalenceUnit : Unit
+
+
+  setEquation1() : void
+  setEquation2() : void
+  inputEquation1() : void
+  inputEquation2() : void
+
+
+Find Creative way to display truth tables
+
+Start view
+  GUI

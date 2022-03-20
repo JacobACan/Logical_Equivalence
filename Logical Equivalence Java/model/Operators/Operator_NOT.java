@@ -1,5 +1,6 @@
 package model.Operators;
 
+
 public class Operator_NOT extends Operator{
     private Unit rightUnit;
     public Operator_NOT(int size, Unit rightUnit) {

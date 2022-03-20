@@ -175,16 +175,4 @@ public class Equation_Parser {
     public String getParsedString() {
         return compiledString;
     }
-
-
-    public static void main(String[] args) {
-        Equation_Parser string1 = new Equation_Parser("p ∧ q"); 
-        Equation_Parser string2 = new Equation_Parser("p ∨ q");
-        Equation_Parser string3 = new Equation_Parser("p → q");
-        Equation_Parser string4 = new Equation_Parser("p ↔ q");
-        Equation_Parser string5 = new Equation_Parser("p ≡ q");
-        Equation_Parser string6 = new Equation_Parser("p ∧ ¬q"); 
-
-        System.out.println("");
-    }
 }

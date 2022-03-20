@@ -1,10 +1,14 @@
 package model.Operators;
 
+import java.util.Arrays;
+
 public class Operator_PROPOSITION extends Operator{
     private int propositionNumber;
-    public Operator_PROPOSITION(int size, int propositionNumber) {
+    private String proposition;
+    public Operator_PROPOSITION(int size, int propositionNumber, String proposition) {
         super(size);
         this.propositionNumber = propositionNumber;
+        this.proposition = proposition;
         evaluate();
     }
 
@@ -22,5 +26,8 @@ public class Operator_PROPOSITION extends Operator{
                 i++;
             }
         }
+    }
+    public String toString() {
+        return String.format("%s: %s", proposition, Arrays.toString(truthTable));
     }
 }
