@@ -13,3 +13,6 @@ Start logical_equivalence final model user interface through terminal
 
 
 Find Creative way to display truth tables
+
+Start view
+  GUI
