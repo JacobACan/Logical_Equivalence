@@ -71,7 +71,7 @@ public class Parse_Reader {
             return new Operator_NOT(size, makeParsedString(parsedString, ++pointer));
 
         } else if ( OperatorType.PROPOSITION.toString().contains(Character.toString(parsedString.charAt(pointer))) ) {
-            return new Operator_PROPOSITION(size, propositionsNumbers.get(parsedString.charAt(pointer)));
+            return new Operator_PROPOSITION(size, propositionsNumbers.get(parsedString.charAt(pointer)), Character.toString(parsedString.charAt(pointer)) );
 
         } else {
             return null;
@@ -101,7 +101,7 @@ public class Parse_Reader {
 
     @Override
     public String toString() {
-        return this.unit.getTruthTable().toString();
+        return this.unit.toString();
     }
 
 
@@ -112,23 +112,27 @@ public class Parse_Reader {
         Equation_Parser string4 = new Equation_Parser("p ↔ q"); 
         Equation_Parser string5 = new Equation_Parser("p ≡ q"); 
         Equation_Parser string6 = new Equation_Parser("p ∧ ¬q"); 
-        //Logically Equal Test
+        //Logically Equal Tests
         Equation_Parser string7 = new Equation_Parser("(p → q) ≡ (¬p ∨ q)"); 
-
-
-        Equation_Parser string10 = new Equation_Parser("¬(¬r ↔ (q → s) ∧ q ∨ p) ≡ (¬r ∧ (¬q → ¬s) ∧ q ∧ ¬p)");
+        Equation_Parser string8 = new Equation_Parser("¬(p ∧ q) ≡ (¬p ∨ ¬q)"); 
+        Equation_Parser string9 = new Equation_Parser("((p → q) ∧ (q → p)) ≡ (p ↔ q)"); 
+        Equation_Parser string10 = new Equation_Parser("(p ∨ ( q ∧ r )) ≡ ((p ∨ q) ∧ (p ∨ r))"); 
+        
+        
 
 
         Parse_Reader parseReader1 = new Parse_Reader(string1.toString());
         Parse_Reader parseReader2 = new Parse_Reader(string2.toString());
-        Parse_Reader parseReader3 = new Parse_Reader(string3.toString());
+        Parse_Reader parseReader3 = new Parse_Reader(string3.toString()); 
         Parse_Reader parseReader4 = new Parse_Reader(string4.toString());
         Parse_Reader parseReader5 = new Parse_Reader(string5.toString());
         Parse_Reader parseReader6 = new Parse_Reader(string6.toString());
         Parse_Reader parseReader7 = new Parse_Reader(string7.toString());
-
+        Parse_Reader parseReader8 = new Parse_Reader(string8.toString());
+        Parse_Reader parseReader9 = new Parse_Reader(string9.toString());
         Parse_Reader parseReader10 = new Parse_Reader(string10.toString());
 
-        System.out.println("x");
+
+        System.out.println(parseReader10.toString());
     }
 }

@@ -1,5 +1,7 @@
 package model.Operators;
 
+import java.util.Arrays;
+
 public class Operator_AND extends Operator{
     private Unit leftUnit;
     private Unit rightUnit;
@@ -20,4 +22,8 @@ public class Operator_AND extends Operator{
             i++;
         }
     }
+    // @Override
+    // public String toString() {
+    //     return String.format("left: %s\nright: %s\n%s\n", leftUnit, rightUnit ,Arrays.toString(truthTable));
+    // }
 }
