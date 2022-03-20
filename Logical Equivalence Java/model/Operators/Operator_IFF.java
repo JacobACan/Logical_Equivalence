@@ -1,6 +1,5 @@
 package model.Operators;
 
-import java.util.Arrays;
 
 public class Operator_IFF extends Operator{
     private Unit leftUnit;
@@ -26,8 +25,4 @@ public class Operator_IFF extends Operator{
             i++;
         }
     }
-    // @Override
-    // public String toString() {
-    //     return String.format("left: %s\nright: %s\n%s\n", leftUnit, rightUnit ,Arrays.toString(truthTable));
-    // }
 }

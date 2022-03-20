@@ -27,7 +27,7 @@ public class Operator_PROPOSITION extends Operator{
             }
         }
     }
-    // public String toString() {
-    //     return String.format("%s: %s", proposition, Arrays.toString(truthTable));
-    // }
+    public String toString() {
+        return String.format("%s: %s", proposition, Arrays.toString(truthTable));
+    }
 }

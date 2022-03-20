@@ -133,6 +133,15 @@ public class Parse_Reader {
         Parse_Reader parseReader10 = new Parse_Reader(string10.toString());
 
 
+        System.out.println(parseReader1.toString());
+        System.out.println(parseReader2.toString());
+        System.out.println(parseReader3.toString());
+        System.out.println(parseReader4.toString());
+        System.out.println(parseReader5.toString());
+        System.out.println(parseReader6.toString());
+        System.out.println(parseReader7.toString());
+        System.out.println(parseReader8.toString());
+        System.out.println(parseReader9.toString());
         System.out.println(parseReader10.toString());
     }
 }

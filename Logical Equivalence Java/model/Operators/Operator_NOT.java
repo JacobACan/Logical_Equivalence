@@ -1,6 +1,5 @@
 package model.Operators;
 
-import java.util.Arrays;
 
 public class Operator_NOT extends Operator{
     private Unit rightUnit;
@@ -19,8 +18,4 @@ public class Operator_NOT extends Operator{
             i++;
         }
     }
-    // @Override
-    // public String toString() {
-    //     return String.format("left: %s\n%s\n", rightUnit ,Arrays.toString(truthTable));
-    // }
 }
