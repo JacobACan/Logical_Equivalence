@@ -1,2 +1,1 @@
-Make propositions enumeration
-make parser a class
+Start logical_equivalence final model user interface through terminal
