@@ -7,7 +7,8 @@ public class Logical_EquivalenceCLI {
         //TODO : gets input for equation from user and returns it
         return null;
     }
-    public static void printEquationsAndEquivalence() {
+    public static void printEquationsAndEquivalence(Logical_Equivalence logical_Equivalence) {
+        System.out.println(String.format("\n%s", logical_Equivalence.toString()));
         //TODO : prints equations and equivalence
     }
     public static boolean testLogicalEquivalence(Logical_Equivalence logical_Equivalence) {

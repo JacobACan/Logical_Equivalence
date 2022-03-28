@@ -1,3 +1,5 @@
+Create Equation Parser Exception
+
 Find Creative way to display truth tables
 
 Start view
