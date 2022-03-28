@@ -15,10 +15,8 @@ public class Logical_EquivalenceCLI {
         .replace("not", OperatorType.NOT.toString());
         return convertedString;
     }
-    public static boolean setEquation(Logical_Equivalence logical_Equivalence, int equationNumber) {
+    public static boolean setEquation(Logical_Equivalence logical_Equivalence, int equationNumber, Scanner scanner) {
         boolean inValidEquation = true;
-        int i = 0;
-        Scanner scanner = new Scanner(System.in);
         String userInput;
         while(inValidEquation) {
             System.out.print(String.format("\nEnter Valid Equation %d: ", equationNumber));
@@ -35,16 +33,13 @@ public class Logical_EquivalenceCLI {
             } catch (LogicalEquivalenceException e) {
                 System.out.println(e);
             }
-            i++;
         }
-        
         return true;
     }
     public static void printEquationsAndEquivalence(Logical_Equivalence logical_Equivalence) {
         System.out.println(String.format("\n%s", logical_Equivalence.toString()));
     }
-    public static boolean testLogicalEquivalence(Logical_Equivalence logical_Equivalence) {
-        Scanner scanner = new Scanner(System.in);
+    public static boolean testLogicalEquivalence(Logical_Equivalence logical_Equivalence, Scanner scanner) {
         System.out.print("\nEnter a command: ");
         String userInput = scanner.nextLine().strip();
         if (scannerOptionQuit(userInput)) {
@@ -53,8 +48,8 @@ public class Logical_EquivalenceCLI {
         } else if (userInput.toLowerCase().equals("help")) {
             help();
         } else if (userInput.toLowerCase().equals("equation")) {
-            if (!setEquation(logical_Equivalence, 1)) return endProgram(scanner);
-            if (!setEquation(logical_Equivalence, 2)) return endProgram(scanner);
+            if (!setEquation(logical_Equivalence, 1, scanner)) return false;
+            if (!setEquation(logical_Equivalence, 2, scanner)) return false;
             try{
                 logical_Equivalence.evaluate();
             } catch (LogicalEquivalenceException e) {
@@ -65,7 +60,6 @@ public class Logical_EquivalenceCLI {
             System.out.println("Command Not Recognized...\n-help : for help");
         }
         
-        // scanner.close();
         return true;
     }
     public static boolean scannerOptionQuit(String userInput) {
@@ -75,18 +69,16 @@ public class Logical_EquivalenceCLI {
         }
         return false;
     }
-    public static boolean endProgram(Scanner scanner) {
-        scanner.close();
-        return false;
-    }
     public static void help() {
-        System.out.println(String.format("\n-----HELP MENU-----\n\t-equation : to test logical equivalence\n\t\t-ex : (p and not q) iff r\n\t-quit : to quit\n\t-help : displays this message.\n____________________"));
+        System.out.println(String.format("\n-----HELP MENU-----\n\t-equation : to test logical equivalence\n\t\t-ex : (p and not q) iff r or z and q\n\t-quit : to quit\n\t-help : displays this message.\n____________________"));
     }
 
 
     public static void main(String[] args) {
         Logical_Equivalence logical_Equivalence = new Logical_Equivalence();
         help();
-        while(testLogicalEquivalence(logical_Equivalence));    
+        Scanner scanner = new Scanner(System.in);
+        while(testLogicalEquivalence(logical_Equivalence, scanner));  
+        scanner.close(); 
     }
 }
