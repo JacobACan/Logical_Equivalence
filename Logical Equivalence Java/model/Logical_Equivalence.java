@@ -1,11 +1,14 @@
 package model;
 
+import java.util.Arrays;
 import java.util.List;
 
 import model.Operators.OperatorType;
 import model.Operators.Unit;
 
 public class Logical_Equivalence {
+    private String equation1;
+    private String equation2;
     private String parsedLogicalEquivalenceEquation1;
     private String parsedLogicalEquivalenceEquation2;
     private String finalparsedlogicalEquivalenceEquation;
@@ -20,18 +23,19 @@ public class Logical_Equivalence {
 
     public void setEquation1(String equation) throws LogicalEquivalenceException{
         checkEquation(equation);
+        this.equation1 = equation;
         this.parsedLogicalEquivalenceEquation1 = new Equation_Parser(equation).toString();
     }
     public void setEquation2(String equation) throws LogicalEquivalenceException{
         checkEquation(equation);
+        this.equation2 = equation;
         this.parsedLogicalEquivalenceEquation2 = new Equation_Parser(equation).toString();
-
     }
     private void checkEquation(String equation) throws LogicalEquivalenceException {
         if ((new Equation_Parser(equation)).getParsedString() == null) throw new LogicalEquivalenceException("Invalid Equation");
     }
 
-    public boolean getlogicalEquivalence() throws LogicalEquivalenceException{
+    private boolean getlogicalEquivalence() throws LogicalEquivalenceException{
         if (this.logicalEquivalenceUnit == null) throw new LogicalEquivalenceException("Equations must be evaluated before evaluating their logical equivalence.");
         boolean[] finalTruthTable = logicalEquivalenceUnit.getTruthTable();
         for (boolean unit : finalTruthTable) {
@@ -53,7 +57,12 @@ public class Logical_Equivalence {
     }
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        return super.toString();
+        String logicalEquivalence;
+        try {
+            logicalEquivalence = String.valueOf(getlogicalEquivalence());
+        } catch (LogicalEquivalenceException e) {
+            logicalEquivalence = e.getMessage();
+        }
+        return String.format("Equation 1: %s\nEquation 2: %s\nTruthtable: %s\nLogically Equal: %s", equation1, equation2, Arrays.toString(logicalEquivalenceUnit.getTruthTable()) , logicalEquivalence);
     }
 }

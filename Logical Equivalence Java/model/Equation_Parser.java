@@ -86,7 +86,7 @@ public class Equation_Parser {
         if (validInput) {
             this.compiledString = parseString(this.inputString);
             if (compiledString.equals("")) compiledString = null;
-            if (compiledString.equals("Invalid String")) compiledString = null;
+            if (compiledString == null || compiledString.equals("Invalid String")) compiledString = null;
         } else {
             this.compiledString = null;
         }
