@@ -2,23 +2,24 @@ package model;
 
 import java.util.List;
 
+import model.Operators.OperatorType;
 import model.Operators.Unit;
 
 public class Logical_Equivalence {
     private String equation1;
     private String equation2;
-    private String logicalEquivalenceEquation;
-    private String parsedLogicalEquivalenceEquation;
+    private String parsedLogicalEquivalenceEquation1;
+    private String parsedLogicalEquivalenceEquation2;
+    private String finalparsedlogicalEquivalenceEquation;
     private Unit logicalEquivalenceUnit;
-    private boolean logicalEquivalence;
 
     public Logical_Equivalence() {
         this.equation1 = "";
         this.equation2 = "";
-        this.logicalEquivalenceEquation = "";
-        this.parsedLogicalEquivalenceEquation = "";
+        this.parsedLogicalEquivalenceEquation1 = "";
+        this.parsedLogicalEquivalenceEquation2 = "";
+        this.finalparsedlogicalEquivalenceEquation = "";
         this.logicalEquivalenceUnit = null;
-        this.logicalEquivalence = false;
     }
 
     public void setEquation1(String equation) {
@@ -30,7 +31,11 @@ public class Logical_Equivalence {
 
     public boolean getlogicalEquivalence() throws LogicalEquivalenceException{
         if (this.logicalEquivalenceUnit == null) throw new LogicalEquivalenceException("Equations must be evaluated before evaluating their logical equivalence.");
-        return this.logicalEquivalence;
+        boolean[] finalTruthTable = logicalEquivalenceUnit.getTruthTable();
+        for (boolean unit : finalTruthTable) {
+            if (unit == false) return false;
+        }
+        return true;
     }
     public List<List<boolean[]>> getTruthTables() throws LogicalEquivalenceException{
         if (this.logicalEquivalenceUnit == null) throw new LogicalEquivalenceException("Equations must be evaluated before accessing their truth tables.");
@@ -39,15 +44,11 @@ public class Logical_Equivalence {
         return null;
     }
 
-  private void evaluate() throws LogicalEquivalenceException{
-        if (equation1 == "" && equation2 == "") throw new LogicalEquivalenceException("Both equations needed to evaluate equivalence.");    
-        //TODO : evaluates logical equvalence between two equations
-  }
-  
-
-    
-
-    public static void main(String[] args) {
-        
+    public void evaluate() throws LogicalEquivalenceException{
+        if (equation1 == "" && equation2 == "") throw new LogicalEquivalenceException("Both equations needed to evaluate equivalence.");  
+        this.parsedLogicalEquivalenceEquation1 = new Equation_Parser(equation1).toString();
+        this.parsedLogicalEquivalenceEquation2 = new Equation_Parser(equation2).toString();
+        this.finalparsedlogicalEquivalenceEquation = String.format("%s%s%s", OperatorType.LOGICALLY_EQUAL.toString(), parsedLogicalEquivalenceEquation1, parsedLogicalEquivalenceEquation2);
+        this.logicalEquivalenceUnit = new Parse_Reader(finalparsedlogicalEquivalenceEquation).getUnit();
     }
 }
