@@ -6,12 +6,21 @@ import java.util.List;
 import model.Operators.OperatorType;
 
 public class Equation_Parser {
+    //initial Input
     private String inputString;
+
+    //final parsed string
     private String compiledString;
+
+    //if the input is valid
     private boolean validInput;
+
+    //the order in which operators will be checked
     private List<String> orderOfOperations;
+
+    //propositions that can be used in the input
     private String propositions;
- 
+    
     public Equation_Parser(String inputString) {
         this.propositions = OperatorType.PROPOSITION.toString();
 
@@ -26,7 +35,9 @@ public class Equation_Parser {
         this.compiledString = "";
         parseInput();
     }
-    
+    /**
+     * Sets the order in which the operators will be checked when parsing
+     */
     private void setOrderOfOperations() {
         orderOfOperations.add(OperatorType.LOGICALLY_EQUAL.toString());
         orderOfOperations.add(OperatorType.IFF.toString());
@@ -35,7 +46,11 @@ public class Equation_Parser {
         orderOfOperations.add(OperatorType.AND.toString());
         orderOfOperations.add(OperatorType.NOT.toString());
     }
-
+    /**
+     * 
+     * @param inputString
+     * @return Returns true if proper parenthesis notation followed
+     */
     private boolean checkParenthesis(String inputString) {
         int leftParenthesis = 0;
         int rightParenthesis = 0;
@@ -53,6 +68,9 @@ public class Equation_Parser {
         return false;
     }
     
+    /**
+     * Removes any spaces from the input string
+     */
     private void removeSpaces() {
         String removedSpacesString = "";
         char[] inputStringArray = this.inputString.toCharArray();
@@ -63,6 +81,12 @@ public class Equation_Parser {
         }
         this.inputString = removedSpacesString;
     }
+
+    /**
+     * Removes outside parathesis [ex: (Hello) = Hello] if there are parenthesis to remove.
+     * @param string The string that you wish to remove outside parenthesis from.
+     * @return The same string without outside parenthesis
+     */
     private String removeOutsideParenthesis(String string) {
         String removedParenthesisString = string;
         char[] StringArray = string.toCharArray();
@@ -82,17 +106,26 @@ public class Equation_Parser {
         return removedParenthesisString;
     }
 
+    /***
+     * Parses the input string into a format that can be read by pointing through the string 
+     * EX: (p ^ q) ^ r = ^^pqr
+     */
     private void parseInput() {        
         if (validInput) {
             this.compiledString = parseString(this.inputString);
-            if (compiledString.equals("")) compiledString = null;
-            if (compiledString.equals("Invalid String")) compiledString = null;
+            if (compiledString.equals("")) compiledString = null; //String was unable to be parsed
+            if (compiledString.equals("Invalid String")) compiledString = null; //String was unable to be parsed
         } else {
             this.compiledString = null;
         }
     }
 
-
+    /**
+     * Recursively called to build a parsed version of the input
+     * EX: (p ^ q) ^ r = ^^pqr
+     * @param inputString The string being parsed
+     * @return A parsed version of the string
+     */
     private String parseString(String inputString) {
         boolean insideParenthesis = false;
         boolean operatorFound = false;
@@ -156,11 +189,11 @@ public class Equation_Parser {
                 
 
 
-                if (notOperatorFound && rightString!= "") return String.format("%s%s", operator, parsedRightString);
-                if (inputString.length() == 1 && propositions.contains(inputString.substring(0, 1)) ) return inputString;
-                if (operatorFound && (parsedLeftString.equals("") || parsedRightString.equals(""))) return "Invalid String";
-                if (operatorFound && (parsedLeftString.contains("Invalid String") || parsedRightString.contains("Invalid String"))) return "Invalid String";
-                if (operatorFound) return (String.format("%s%s%s", operator, parsedLeftString, parsedRightString));
+                if (notOperatorFound && rightString!= "") return String.format("%s%s", operator, parsedRightString); // return parsed version when not is operator if the rightString is able to be parsed
+                if (inputString.length() == 1 && propositions.contains(inputString.substring(0, 1)) ) return inputString; // return proposition when reaching the bottom of the recursive stack BASE CASE
+                if (operatorFound && (parsedLeftString.equals("") || parsedRightString.equals(""))) return "Invalid String"; // Invalid string if right string or left string are not recursively parsed to a proposition
+                if (operatorFound && (parsedLeftString.contains("Invalid String") || parsedRightString.contains("Invalid String"))) return "Invalid String"; // When calling back up the stack if any string is parsed to an Invalid String then the entire string is invalid
+                if (operatorFound) return (String.format("%s%s%s", operator, parsedLeftString, parsedRightString)); //return p ^ q -> ^pq
                 
             }
         }
