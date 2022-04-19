@@ -113,8 +113,8 @@ public class Equation_Parser {
     private void parseInput() {        
         if (validInput) {
             this.compiledString = parseString(this.inputString);
-            if (compiledString.equals("")) compiledString = null; //String was unable to be parsed
-            if (compiledString.equals("Invalid String")) compiledString = null; //String was unable to be parsed
+            if (compiledString.equals("")) compiledString = null;// If the final string was not parsed to a proposition, then it is not able to be compiled string
+            if (compiledString == null || compiledString.equals("Invalid String")) compiledString = null; // If the string was determined to be invalid during parsing, then it is not able to be a compiled string.
         } else {
             this.compiledString = null;
         }
