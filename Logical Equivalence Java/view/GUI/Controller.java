@@ -32,6 +32,7 @@ public class Controller implements Initializable {
         } catch (LogicalEquivalenceException e) {
             equation1.setStyle("-fx-background-color: red; ");
         }
+        solveEquivalence();
     }
 
     public void setEquation2() {
@@ -42,6 +43,7 @@ public class Controller implements Initializable {
         } catch (LogicalEquivalenceException e) {
             equation2.setStyle("-fx-background-color: red; ");
         }
+        solveEquivalence();
     }
 
     public void solveEquivalence() {

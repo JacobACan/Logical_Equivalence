@@ -9,14 +9,13 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.GUI.Controller"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox>
-        <Label text="Logical Equivalence"></Label>
+            prefHeight="400.0" prefWidth="1000.0">
+    <VBox styleClass="centered">
+        <Label styleClass="title" text="Logical Equivalence"></Label>
         <HBox >
             <TextField text="Equation 1" fx:id="equation1" onKeyTyped="#setEquation1" ></TextField>
             <TextField text="Equation 2" fx:id="equation2" onKeyTyped="#setEquation2"></TextField>
         </HBox>
-        <Button text="Solve" fx:id="solveButton" onAction="#solveEquivalence"></Button>
         <Label text="Result:" fx:id="result"></Label>
     </VBox>
 

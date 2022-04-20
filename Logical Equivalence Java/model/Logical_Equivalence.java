@@ -50,7 +50,9 @@ public class Logical_Equivalence {
         return null;
     }
     public boolean[] getTruthTable() {
-        return logicalEquivalenceUnit.getTruthTable();
+        if (logicalEquivalenceUnit != null)
+            return logicalEquivalenceUnit.getTruthTable();
+        return null;
     }
 
     public void evaluate() throws LogicalEquivalenceException{
