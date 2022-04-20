@@ -8,6 +8,10 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class Logical_EquivalenceGUI extends Application{
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Logical_Equivalence.fxml"));
@@ -16,13 +20,5 @@ public class Logical_EquivalenceGUI extends Application{
         stage.setTitle("Logical Equivalence Calculator");
         stage.setScene(scene);
         stage.show();
-    }
-    private Button makeButton(String innerText) {
-        Button button = new Button(innerText);
-
-        return button;
-    }
-    public static void main(String[] args) {
-        launch(args);
     }
 }
