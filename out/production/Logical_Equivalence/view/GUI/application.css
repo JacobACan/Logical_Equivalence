@@ -1,9 +1,20 @@
 .centered {
     -fx-alignment: center;
     -fx-padding: 20;
+    -fx-background-color: gray;
 }
 .title {
-    -fx-font-size: 20;
-    -fx-font-family: "Lucida Console";
+    -fx-font-size: 30;
     -fx-padding: 20px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+.equation {
+    -fx-alignment: center;
+    -fx-opacity: 70%;
+    -fx-padding: 30px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-insets: 10px;
+    -fx-background-insets: 10px;
 }

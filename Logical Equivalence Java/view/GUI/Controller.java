@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    public Label title;
     public Button solveButton;
     public Label result;
     public TextField equation1;
@@ -22,6 +23,7 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         logical_equivalence = new Logical_Equivalence();
+
     }
 
     public void setEquation1() {
