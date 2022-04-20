@@ -9,15 +9,16 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="view.GUI.Controller"
-            prefHeight="400.0" prefWidth="400.0"
-            styleClass="centered">
-    <VBox  styleClass="centered">
-        <Label styleClass="title" text="Logical Equivalence"></Label>
-        <HBox >
-            <TextField promptText="Equation 1"  styleClass="equation"  fx:id="equation1" onKeyTyped="#setEquation1" ></TextField>
-            <TextField promptText="Equation 2"  styleClass="equation"  fx:id="equation2" onKeyTyped="#setEquation2"></TextField>
+            prefHeight="400" prefWidth="NaN"
+            styleClass="centered"
+            fx:id="scene">
+    <VBox fx:id="container" styleClass="centered">
+        <Label fx:id="title" styleClass="title" text="Logical Equivalence"></Label>
+        <HBox styleClass="centered">
+            <TextField minWidth="400" promptText="Equation 1 (Ex: (p or q))"  styleClass="equation"  fx:id="equation1" onKeyTyped="#setEquation1" ></TextField>
+            <TextField minWidth="400" promptText="Equation 2 (Ex: (p iff q))"  styleClass="equation"  fx:id="equation2" onKeyTyped="#setEquation2"></TextField>
         </HBox>
-        <Label text="Result:" fx:id="result"></Label>
+        <VBox  fx:id="result"></VBox>
     </VBox>
 
 </AnchorPane>

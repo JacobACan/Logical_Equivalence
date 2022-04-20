@@ -18,7 +18,6 @@ public class Logical_EquivalenceGUI extends Application{
         Parent root = FXMLLoader.load(getClass().getResource("Logical_Equivalence.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-        stage.centerOnScreen();
         stage.setTitle("Logical Equivalence Calculator");
         stage.setScene(scene);
         stage.show();
