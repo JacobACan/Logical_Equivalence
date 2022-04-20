@@ -1,0 +1,28 @@
+.centered {
+    -fx-alignment: center;
+    -fx-padding: 20;
+    -fx-background-color:  #d5d5d5;
+}
+.title {
+    -fx-font-size: 50;
+
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.equation {
+    -fx-alignment: center;
+    -fx-opacity: 70%;
+    -fx-padding: 30px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-insets: 10px;
+    -fx-background-insets: 10px;
+    -fx-alignment: center;
+}
+#truthTable {
+    -fx-font-size: 16;
+}
+#result {
+    -fx-background-color: lightgray;
+    -fx-opacity: 55%;
+}

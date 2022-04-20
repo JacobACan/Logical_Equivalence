@@ -7,7 +7,7 @@ import model.Logical_Equivalence;
 import model.Operators.OperatorType;
 
 public class Logical_EquivalenceCLI {
-    public static String convertUserInputEquation (String userInput) {
+    private static String convertUserInputEquation (String userInput) {
         String convertedString = userInput.replace("and", OperatorType.AND.toString())
         .replace("or", OperatorType.OR.toString())
         .replace("iff", OperatorType.IFF.toString())

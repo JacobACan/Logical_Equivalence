@@ -49,9 +49,14 @@ public class Logical_Equivalence {
         //   breadth first search
         return null;
     }
+    public boolean[] getTruthTable() {
+        if (logicalEquivalenceUnit != null)
+            return logicalEquivalenceUnit.getTruthTable();
+        return null;
+    }
 
     public void evaluate() throws LogicalEquivalenceException{
-        if (parsedLogicalEquivalenceEquation1 == "" || parsedLogicalEquivalenceEquation2 == "") throw new LogicalEquivalenceException("Both equations needed to evaluate equivalence.");  
+        if (parsedLogicalEquivalenceEquation1 == "" || parsedLogicalEquivalenceEquation2 == "") throw new LogicalEquivalenceException("Both equations needed to evaluate equivalence.");
         this.finalparsedlogicalEquivalenceEquation = String.format("%s%s%s", OperatorType.LOGICALLY_EQUAL.toString(), parsedLogicalEquivalenceEquation1, parsedLogicalEquivalenceEquation2);
         this.logicalEquivalenceUnit = new Parse_Reader(finalparsedlogicalEquivalenceEquation).getUnit();
     }
